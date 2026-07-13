@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Joshua Davis — Software Engineer</title>
+<meta name="description" content="Joshua Davis is a Sydney-based software engineer working in C#, .NET, TypeScript and SQL. Currently studying Computing Science at UTS and building FlowBoard.">
+<meta name="color-scheme" content="light dark">
+<script>
+(function () {
+  var t = null;
+  try { t = localStorage.getItem('theme'); } catch (e) {}
+  if (t !== 'light' && t !== 'dark') {
+    t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  document.documentElement.setAttribute('data-theme', t);
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper: #f3f4f2;
+  --card: #ffffff;
+  --ink: #16181d;
+  --ink-soft: #4b4f58;
+  --muted: #82868f;
+  --line: #dcdee1;
+  --accent: #512bd4;
+  --accent-soft: #ece7fb;
+  --accent-bright: #9d86ec;
+  --ok: #1f9d63;
+  --ok-soft: #e3f4ec;
+  --nav-bg: rgba(243, 244, 242, 0.88);
+  --contact-bg: #16181d;
+  --contact-text: #f3f4f2;
+  --contact-sub: #b9bcc4;
+  --contact-border: #3a3e49;
+  --term-shadow: 0 24px 48px -24px rgba(22, 24, 29, 0.35);
+  --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --sans: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
+  --display: "Archivo", var(--sans);
+}
+
+[data-theme="dark"] {
+  --paper: #131417;
+  --card: #1b1d23;
+  --ink: #eceded;
+  --ink-soft: #b4b7bf;
+  --muted: #7e828b;
+  --line: #2b2e36;
+  --accent: #9d86ec;
+  --accent-soft: rgba(157, 134, 236, 0.14);
+  --ok: #4ecf94;
+  --ok-soft: rgba(78, 207, 148, 0.14);
+  --nav-bg: rgba(19, 20, 23, 0.88);
+  --contact-bg: #1b1d23;
+  --contact-text: #eceded;
+  --contact-sub: #b4b7bf;
+  --contact-border: #33363f;
+  --term-shadow: 0 24px 48px -24px rgba(0, 0, 0, 0.6);
+  color-scheme: dark;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+::selection { background: var(--accent); color: var(--paper); }
+
+a { color: inherit; }
+
+a:focus-visible, button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.wrap {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ---------- Nav ---------- */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--nav-bg);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+}
+
+.nav-right { display: flex; align-items: center; gap: 24px; }
+
+.theme-toggle {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--ink-soft);
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.theme-toggle:hover { color: var(--accent); border-color: var(--accent); }
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.nav-name {
+  font-family: var(--mono);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+}
+
+.nav-name .tld { color: var(--accent); }
+
+.nav-links {
+  display: flex;
+  gap: 28px;
+  list-style: none;
+}
+
+.nav-links a {
+  font-family: var(--mono);
+  font-size: 13px;
+  text-decoration: none;
+  color: var(--ink-soft);
+  transition: color 0.15s ease;
+}
+
+.nav-links a:hover { color: var(--accent); }
+
+/* ---------- Hero ---------- */
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: 56px;
+  align-items: center;
+  padding: 88px 0 96px;
+}
+
+.hero-eyebrow {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--accent);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hero-eyebrow::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ok);
+  flex-shrink: 0;
+}
+
+.hero h1 {
+  font-family: var(--display);
+  font-variation-settings: "wdth" 110;
+  font-weight: 700;
+  font-size: clamp(42px, 6.5vw, 68px);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  margin-bottom: 22px;
+}
+
+.hero h1 .thin {
+  display: block;
+  font-variation-settings: "wdth" 78;
+  font-weight: 500;
+  color: var(--ink-soft);
+  font-size: 0.52em;
+  letter-spacing: 0;
+  margin-top: 10px;
+}
+
+.hero p {
+  color: var(--ink-soft);
+  max-width: 46ch;
+  margin-bottom: 32px;
+}
+
+.hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+
+.btn {
+  font-family: var(--mono);
+  font-size: 14px;
+  text-decoration: none;
+  padding: 12px 22px;
+  border-radius: 6px;
+  border: 1px solid var(--ink);
+  transition: transform 0.12s ease, background 0.15s ease, color 0.15s ease;
+  display: inline-block;
+}
+
+.btn:active { transform: scale(0.98); }
+
+.btn-primary { background: var(--ink); color: var(--paper); }
+.btn-primary:hover { background: var(--accent); border-color: var(--accent); }
+
+.btn-ghost { background: transparent; color: var(--ink); }
+.btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ---------- Terminal card (signature) ---------- */
+.term {
+  background: #1b1d23;
+  border-radius: 10px;
+  border: 1px solid #2c2f38;
+  overflow: hidden;
+  box-shadow: var(--term-shadow);
+}
+
+.term-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 1px solid #2c2f38;
+}
+
+.term-dots { display: flex; gap: 6px; }
+.term-dots span { width: 10px; height: 10px; border-radius: 50%; background: #3a3e49; }
+
+.term-title {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: #82868f;
+}
+
+.term-body {
+  padding: 20px 22px 24px;
+  font-family: var(--mono);
+  font-size: 13.5px;
+  line-height: 1.75;
+  color: #c9ccd4;
+  min-height: 330px;
+}
+
+.term-body .req { color: #82868f; }
+.term-body .status {
+  display: inline-block;
+  background: rgba(31, 157, 99, 0.16);
+  color: #4ecf94;
+  padding: 1px 9px;
+  border-radius: 4px;
+  font-size: 12px;
+  margin: 6px 0;
+}
+.term-body .key { color: #9d86ec; }
+.term-body .str { color: #8fd0ae; }
+.term-body .brace { color: #82868f; }
+.cursor {
+  display: inline-block;
+  width: 8px;
+  height: 16px;
+  background: #9d86ec;
+  vertical-align: -2px;
+  animation: blink 1s step-end infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+/* ---------- Sections ---------- */
+section { padding: 72px 0; border-top: 1px solid var(--line); }
+
+.sec-head { margin-bottom: 44px; }
+
+.route {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+
+.route .verb {
+  background: var(--accent-soft);
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-right: 8px;
+  font-weight: 500;
+}
+
+.sec-head h2 {
+  font-family: var(--display);
+  font-variation-settings: "wdth" 105;
+  font-weight: 650;
+  font-size: clamp(28px, 4vw, 38px);
+  letter-spacing: -0.015em;
+  line-height: 1.1;
+}
+
+.sec-head .sub { color: var(--ink-soft); margin-top: 10px; max-width: 60ch; }
+
+/* ---------- Projects ---------- */
+.proj-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.proj {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.proj:hover { border-color: var(--accent); transform: translateY(-2px); }
+
+.proj-featured {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: 36px;
+  border-left: 3px solid var(--accent);
+  border-radius: 0 10px 10px 0;
+}
+
+.proj-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.badge {
+  background: var(--accent-soft);
+  color: var(--accent);
+  padding: 2px 10px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.proj h3 {
+  font-family: var(--display);
+  font-variation-settings: "wdth" 105;
+  font-weight: 650;
+  font-size: 24px;
+  letter-spacing: -0.01em;
+}
+
+.proj p { color: var(--ink-soft); font-size: 15px; }
+
+.proj ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 14.5px;
+  color: var(--ink-soft);
+}
+
+.proj ul li { padding-left: 20px; position: relative; }
+.proj ul li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-family: var(--mono);
+  font-size: 13px;
+}
+
+.tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; padding-top: 6px; }
+
+.tag {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink-soft);
+  border: 1px solid var(--line);
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--paper);
+}
+
+.proj-links { display: flex; gap: 18px; }
+.proj-links a {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--accent);
+  text-decoration: none;
+}
+.proj-links a:hover { text-decoration: underline; }
+
+/* ---------- Skills ---------- */
+.skill-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.skill-col {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 24px;
+}
+
+.skill-col h3 {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
+  text-transform: lowercase;
+  margin-bottom: 16px;
+}
+
+.skill-col h3::before { content: "// "; color: var(--accent); }
+
+.skill-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+.skill-col li {
+  font-size: 15px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.skill-col li .lvl {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: var(--muted);
+}
+
+/* ---------- Experience ---------- */
+.xp-list { display: flex; flex-direction: column; }
+
+.xp {
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr);
+  gap: 28px;
+  padding: 28px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.xp:last-child { border-bottom: none; }
+
+.xp-when {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--muted);
+  padding-top: 4px;
+}
+
+.xp h3 { font-size: 18px; font-weight: 600; }
+.xp .org { color: var(--accent); font-weight: 500; }
+.xp p { color: var(--ink-soft); font-size: 15px; margin-top: 8px; max-width: 64ch; }
+
+/* ---------- Contact ---------- */
+.contact { text-align: left; }
+
+.contact-card {
+  background: var(--contact-bg);
+  color: var(--contact-text);
+  border: 1px solid var(--contact-border);
+  border-radius: 12px;
+  padding: 56px 48px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+  gap: 40px;
+  align-items: center;
+}
+
+.contact-card h2 {
+  font-family: var(--display);
+  font-variation-settings: "wdth" 108;
+  font-weight: 700;
+  font-size: clamp(30px, 4.5vw, 44px);
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  margin-bottom: 16px;
+}
+
+.contact-card p { color: var(--contact-sub); max-width: 44ch; }
+
+.contact-links {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.contact-links a {
+  font-family: var(--mono);
+  font-size: 14px;
+  color: var(--contact-text);
+  text-decoration: none;
+  border: 1px solid var(--contact-border);
+  border-radius: 8px;
+  padding: 14px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.contact-links a:hover { border-color: var(--accent-bright); background: rgba(157, 134, 236, 0.08); }
+.contact-links a .arrow { color: var(--accent-bright); }
+
+footer {
+  padding: 32px 0 40px;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  color: var(--muted);
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* ---------- Reveal on scroll ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.reveal.in { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .cursor { animation: none; }
+  .proj, .btn { transition: none; }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 880px) {
+  .hero { grid-template-columns: 1fr; gap: 40px; padding: 56px 0 64px; }
+  .proj-grid { grid-template-columns: 1fr; }
+  .proj-featured { grid-template-columns: 1fr; gap: 20px; }
+  .skill-grid { grid-template-columns: 1fr; }
+  .xp { grid-template-columns: 1fr; gap: 6px; }
+  .contact-card { grid-template-columns: 1fr; padding: 40px 28px; }
+  .nav-links { gap: 18px; }
+  .nav-right { gap: 14px; }
+  .theme-toggle { padding: 5px 9px; font-size: 12px; }
+  .nav-links li:nth-child(n+4) { display: none; }
+}
+</style>
+</head>
+<body>
+
+<nav aria-label="Main navigation">
+  <div class="nav-inner">
+    <a class="nav-name" href="#top">joshua<span class="tld">.dev</span></a>
+    <div class="nav-right">
+      <ul class="nav-links">
+        <li><a href="#projects">/projects</a></li>
+        <li><a href="#skills">/skills</a></li>
+        <li><a href="#experience">/experience</a></li>
+        <li><a href="#contact">/contact</a></li>
+      </ul>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">theme: light</button>
+    </div>
+  </div>
+</nav>
+
+<main id="top" class="wrap">
+
+  <!-- ============ HERO ============ -->
+  <header class="hero">
+    <div>
+      <p class="hero-eyebrow">open to junior &amp; graduate roles — Sydney, AU</p>
+      <h1>
+        Joshua Davis
+        <span class="thin">Software engineer — C# / .NET &amp; TypeScript</span>
+      </h1>
+      <p>
+        I build backend systems that hold up under scrutiny: REST APIs, auth,
+        and the data models behind them. Currently studying Computing Science
+        at UTS with prior industry experience as a junior developer.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#projects">View projects</a>
+        <a class="btn btn-ghost" href="#contact">Get in touch</a>
+      </div>
+    </div>
+
+    <div class="term" aria-label="Simulated API response describing Joshua Davis">
+      <div class="term-bar">
+        <div class="term-dots"><span></span><span></span><span></span></div>
+        <span class="term-title">flowboard-api — request</span>
+      </div>
+      <pre class="term-body" id="termBody" aria-hidden="true"></pre>
+    </div>
+  </header>
+
+  <!-- ============ PROJECTS ============ -->
+  <section id="projects">
+    <div class="sec-head reveal">
+      <p class="route"><span class="verb">GET</span>/projects</p>
+      <h2>Things I've built</h2>
+      <p class="sub">Business software end to end — role-based .NET systems, plus tooling that closes real gaps in commercial platforms.</p>
+    </div>
+
+    <div class="proj-grid">
+      <article class="proj proj-featured reveal">
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          <div class="proj-meta"><span class="badge">Featured</span><span>2026 · in development</span></div>
+          <h3>FlowBoard</h3>
+          <p>
+            A task and workflow management REST API built for the enterprise
+            patterns that corporate .NET teams actually use — no shortcuts on
+            the security layer.
+          </p>
+          <div class="tags">
+            <span class="tag">C#</span>
+            <span class="tag">ASP.NET Core</span>
+            <span class="tag">EF Core</span>
+            <span class="tag">SQL Server</span>
+            <span class="tag">JWT</span>
+          </div>
+          <div class="proj-links">
+            <a href="https://github.com/JoshuaDavis11/flowboard">source ↗</a>
+          </div>
+        </div>
+        <ul>
+          <li>JWT authentication implemented from scratch — token generation, validation, and refresh handled by a dedicated security service rather than a drop-in package</li>
+          <li>Role-based authorization across three tiers (Admin / Manager / User) with department-level data siloing</li>
+          <li>Relational design in EF Core including a user–task junction table and enum-as-string conventions for readable data</li>
+          <li>Built to mirror the architecture of internal enterprise tooling</li>
+        </ul>
+      </article>
+
+      <article class="proj reveal">
+        <div class="proj-meta"><span>Full-stack · reservation system</span></div>
+        <h3>BeanScene</h3>
+        <p>
+          A reservation and event management system for a café venue, built
+          around a real operational workflow. Three-tier role-based access —
+          customers book and manage their own reservations, staff assign
+          seating and run day-to-day operations, managers control events and
+          user accounts — over a RESTful API and SQL-backed data layer.
+        </p>
+        <div class="tags">
+          <span class="tag">C#</span>
+          <span class="tag">.NET</span>
+          <span class="tag">JavaScript</span>
+          <span class="tag">SQL</span>
+          <span class="tag">REST</span>
+        </div>
+        <div class="proj-links">
+          <a href="https://github.com/JoshuaDavis11/beanscene">source ↗</a>
+        </div>
+      </article>
+
+      <article class="proj reveal">
+        <div class="proj-meta"><span>Workplace tooling · CRM extension</span></div>
+        <h3>Searchable notes for Zoho CRM</h3>
+        <p>
+          An embedded widget that closes a real product gap: Zoho CRM has no
+          native way to search notes. Live search filters every note on a
+          record by title, content, author, or date — with paginated fetching
+          to work past the API's 200-record limit, and inline handling for
+          PDF and file attachments. Written in strict-mode TypeScript.
+        </p>
+        <div class="tags">
+          <span class="tag">TypeScript</span>
+          <span class="tag">Zoho SDK</span>
+          <span class="tag">REST</span>
+          <span class="tag">Bootstrap</span>
+        </div>
+        <div class="proj-links">
+          <a href="https://github.com/JoshuaDavis11/zoho-searchable-notes">source ↗</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ SKILLS ============ -->
+  <section id="skills">
+    <div class="sec-head reveal">
+      <p class="route"><span class="verb">GET</span>/skills</p>
+      <h2>Stack</h2>
+    </div>
+
+    <div class="skill-grid">
+      <div class="skill-col reveal">
+        <h3>languages</h3>
+        <ul>
+          <li>C# <span class="lvl">primary</span></li>
+          <li>TypeScript / JavaScript <span class="lvl">primary</span></li>
+          <li>SQL <span class="lvl">primary</span></li>
+          <li>Python <span class="lvl">working</span></li>
+          <li>C++ <span class="lvl">working</span></li>
+        </ul>
+      </div>
+      <div class="skill-col reveal">
+        <h3>backend</h3>
+        <ul>
+          <li>ASP.NET Core Web API</li>
+          <li>Entity Framework Core</li>
+          <li>SQL Server</li>
+          <li>REST API design</li>
+          <li>JWT auth &amp; RBAC</li>
+        </ul>
+      </div>
+      <div class="skill-col reveal">
+        <h3>tools &amp; practice</h3>
+        <ul>
+          <li>Git &amp; GitHub</li>
+          <li>Zoho platform (Deluge)</li>
+          <li>MVC &amp; layered architecture</li>
+          <li>Data structures &amp; algorithms</li>
+          <li>Relational data modelling</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EXPERIENCE ============ -->
+  <section id="experience">
+    <div class="sec-head reveal">
+      <p class="route"><span class="verb">GET</span>/experience</p>
+      <h2>Experience &amp; education</h2>
+    </div>
+
+    <div class="xp-list">
+      <article class="xp reveal">
+        <div class="xp-when">2025 – present</div>
+        <div>
+          <h3>Bachelor of Computing Science <span class="org">· University of Technology Sydney</span></h3>
+          <p>
+            In progress. Strong results across core subjects including Data
+            Structures &amp; Algorithms and Introduction to Software Development,
+            with a distinction-range average.
+          </p>
+        </div>
+      </article>
+
+      <article class="xp reveal">
+        <div class="xp-when">2024</div>
+        <div>
+          <h3>Junior Zoho Developer <span class="org">· Salt&amp;Lime</span></h3>
+          <p>
+            Built and customised business workflows on the Zoho platform using
+            Deluge and TypeScript — including an embedded CRM widget that made
+            notes searchable across loan records, closing a gap in Zoho's
+            native functionality.
+          </p>
+        </div>
+      </article>
+
+      <article class="xp reveal">
+        <div class="xp-when">2023</div>
+        <div>
+          <h3>Junior .NET Developer <span class="org">· Databyte</span></h3>
+          <p>
+            Developed and maintained business applications in C# on the .NET
+            platform, working with SQL-backed data and real client
+            requirements.
+          </p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section id="contact" class="contact">
+    <div class="contact-card reveal">
+      <div>
+        <p class="route" style="color:#9d86ec;"><span class="verb" style="background:rgba(157,134,236,0.15);color:#9d86ec;">POST</span>/contact</p>
+        <h2>Let's build something.</h2>
+        <p>
+          I'm actively looking for junior, graduate, and internship software
+          engineering roles in Sydney. If you think I'd be a fit for your team,
+          I'd love to hear from you.
+        </p>
+      </div>
+      <div class="contact-links">
+        <a id="emailLink" href="#" rel="nofollow"><span id="emailText">email — enable JS to view</span><span class="arrow">↗</span></a>
+        <a href="https://github.com/JoshuaDavis11" rel="noopener"><span>github.com/JoshuaDavis11</span><span class="arrow">↗</span></a>
+        <a href="https://www.linkedin.com/in/joshua-davis-a86598234/" rel="noopener"><span>linkedin.com/in/joshua-davis</span><span class="arrow">↗</span></a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <span>© 2026 Joshua Davis. Built by hand, hosted anywhere.</span>
+  <span>HTTP 200 — you made it to the bottom.</span>
+</footer>
+
+<script>
+(function () {
+  var lines = [
+    { html: '<span class="req">$ curl https://joshua.dev</span>' },
+    { html: '<span class="req">GET /api/developer HTTP/1.1</span>' },
+    { html: '' },
+    { html: '<span class="status">200 OK</span>' },
+    { html: '<span class="brace">{</span>' },
+    { html: '  <span class="key">"name"</span>: <span class="str">"Joshua Davis"</span>,' },
+    { html: '  <span class="key">"role"</span>: <span class="str">"Software Engineer"</span>,' },
+    { html: '  <span class="key">"location"</span>: <span class="str">"Sydney, AU"</span>,' },
+    { html: '  <span class="key">"stack"</span>: [<span class="str">"C#"</span>, <span class="str">".NET"</span>, <span class="str">"TypeScript"</span>, <span class="str">"SQL"</span>],' },
+    { html: '  <span class="key">"status"</span>: <span class="str">"open_to_work"</span>,' },
+    { html: '  <span class="key">"currently_building"</span>: <span class="str">"FlowBoard"</span>' },
+    { html: '<span class="brace">}</span>' }
+  ];
+
+  var body = document.getElementById('termBody');
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function renderAll() {
+    body.innerHTML = lines.map(function (l) { return l.html; }).join('\n');
+  }
+
+  if (reduced) {
+    renderAll();
+  } else {
+    var i = 0;
+    var cursor = '<span class="cursor"></span>';
+    function next() {
+      if (i >= lines.length) {
+        body.innerHTML = lines.map(function (l) { return l.html; }).join('\n') + ' ' + cursor;
+        return;
+      }
+      body.innerHTML = lines.slice(0, i + 1).map(function (l) { return l.html; }).join('\n') + cursor;
+      i++;
+      setTimeout(next, i <= 2 ? 420 : 130);
+    }
+    setTimeout(next, 350);
+  }
+
+  var eu = ['josh', 'w', 'davis2006'].join('.');
+  var ed = ['gmail', 'com'].join('.');
+  var eaddr = eu + String.fromCharCode(64) + ed;
+  var elink = document.getElementById('emailLink');
+  if (elink) {
+    elink.setAttribute('href', 'mailto:' + eaddr);
+    document.getElementById('emailText').textContent = eaddr;
+  }
+
+  var toggle = document.getElementById('themeToggle');
+  function syncToggleLabel() {
+    var mode = document.documentElement.getAttribute('data-theme');
+    toggle.textContent = 'theme: ' + mode;
+    toggle.setAttribute('aria-pressed', mode === 'dark' ? 'true' : 'false');
+  }
+  syncToggleLabel();
+  toggle.addEventListener('click', function () {
+    var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    try { localStorage.setItem('theme', next); } catch (e) {}
+    syncToggleLabel();
+  });
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(function (el) {
+    if (reduced) { el.classList.add('in'); }
+    else { observer.observe(el); }
+  });
+})();
+</script>
+
+</body>
+</html>
